@@ -28,15 +28,15 @@ final class Podmiot3 extends AbstractDTO implements DomSerializableInterface
      * @param Optional|IDNabywcy $idNabywcy Unikalny klucz powiązania danych nabywcy na fakturach korygujących, w przypadku gdy dane nabywcy na fakturze korygującej zmieniły się w stosunku do danych na fakturze korygowanej
      * @param NrEORI|Optional $nrEORI Numer EORI podmiotu trzeciego
      * @param Podmiot3DaneIdentyfikacyjne $daneIdentyfikacyjne Dane identyfikujące podmiot trzeci
-     * @param Adres $adres Adres podmiotu trzeciego
+     * @param Optional|Adres $adres Adres podmiotu trzeciego
      * @param Optional|array<int, DaneKontaktowe> $daneKontaktowe Dane kontaktowe podmiotu trzeciego
      * @param Udzial|Optional $udzial Udział - procentowy udział dodatkowego nabywcy. Różnica pomiędzy wartością 100% a sumą udziałów dodatkowych nabywców jest udziałem nabywcy wymienionego w części Podmiot2. W przypadku niewypełnienia pola przyjmuje się, że udziały występujących na fakturze nabywców są równe
      * @param Optional|NrKlienta $nrKlienta Numer klienta dla przypadków, w których podmiot wymieniony jako podmiot trzeci posługuje się nim w umowie lub zamówieniu
      */
     public function __construct(
         public readonly Podmiot3DaneIdentyfikacyjne $daneIdentyfikacyjne,
-        public readonly Adres $adres,
         public readonly RolaGroup | RolaInnaGroup $rolaGroup,
+        public readonly Optional | Adres $adres = new Optional(),
         public readonly Optional | IDNabywcy $idNabywcy = new Optional(),
         public readonly Optional | NrEORI $nrEORI = new Optional(),
         public readonly Optional | AdresKoresp $adresKoresp = new Optional(),
@@ -77,9 +77,11 @@ final class Podmiot3 extends AbstractDTO implements DomSerializableInterface
 
         $podmiot3->appendChild($daneIdentyfikacyjne);
 
-        $adres = $dom->importNode($this->adres->toDom()->documentElement, true);
+        if ($this->adres instanceof Adres) {
+            $adres = $dom->importNode($this->adres->toDom()->documentElement, true);
 
-        $podmiot3->appendChild($adres);
+            $podmiot3->appendChild($adres);
+        }
 
         if ($this->adresKoresp instanceof AdresKoresp) {
             $adresKoresp = $dom->importNode($this->adresKoresp->toDom()->documentElement, true);
