@@ -124,6 +124,9 @@ Main features:
         - [Testdata Person](#testdata-person)
             - [Testdata Person Create](#testdata-person-create)
             - [Testdata Person Remove](#testdata-person-remove)
+        - [Testdata Context](#testdata-context)
+            - [Testdata Context Block](#testdata-context-block)
+            - [Testdata Context Unblock](#testdata-context-unblock)
         - [Testdata Limits](#testdata-limits)
             - [Testdata Limits Context](#testdata-limits-context)
                 - [Testdata Limits Context Session](#testdata-limits-context-session)
@@ -1327,6 +1330,40 @@ use N1ebieski\KSEFClient\Requests\Testdata\Person\Remove\RemoveRequest;
 
 $response = $client->testdata()->person()->remove(
     new RemoveRequest(...)
+)->status();
+```
+</details>
+
+#### Testdata Context
+
+<details>
+    <summary>
+        <h5>Testdata Context Block</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Dane-testowe/paths/~1testdata~1context~1block/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Testdata\Context\Block\BlockRequest;
+
+$response = $client->testdata()->context()->block(
+    new BlockRequest(...)
+)->status();
+```
+</details>
+
+<details>
+    <summary>
+        <h5>Testdata Context Unblock</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Dane-testowe/paths/~1testdata~1context~1unblock/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Testdata\Context\Unblock\UnblockRequest;
+
+$response = $client->testdata()->context()->unblock(
+    new UnblockRequest(...)
 )->status();
 ```
 </details>
