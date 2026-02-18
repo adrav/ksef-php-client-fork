@@ -8,10 +8,11 @@ use DOMDocument;
 use N1ebieski\KSEFClient\ValueObjects\Requests\XmlNamespace;
 use DOMElement;
 use N1ebieski\KSEFClient\Contracts\DomSerializableInterface;
+use N1ebieski\KSEFClient\Support\AbstractDTO;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\DataWystFaKorygowanej;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\NrFaKorygowanej;
 
-final class DaneFaKorygowanej implements DomSerializableInterface
+final class DaneFaKorygowanej extends AbstractDTO implements DomSerializableInterface
 {
     /**
      * @param DataWystFaKorygowanej $dataWystFaKorygowanej Data wystawienia faktury korygowanej
