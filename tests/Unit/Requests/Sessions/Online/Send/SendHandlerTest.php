@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Send\SendRequest;
-use N1ebieski\KSEFClient\Support\Utility;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaKorygujacaDaneNabywcyFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaKorygujacaPozaKsefFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaKorygujacaUniwersalnaFixture;
+use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaRR\FakturaSprzedazyTowaruRolniczegoFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaSprzedazyTowaruFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaSprzedazyTowaruFpTpFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaSprzedazyTowaruWithFloatsFixture;
@@ -25,6 +25,7 @@ use N1ebieski\KSEFClient\Testing\Fixtures\Requests\Sessions\Online\Send\SendResp
 use N1ebieski\KSEFClient\Tests\Unit\AbstractTestCase;
 use N1ebieski\KSEFClient\Validator\Rules\Xml\SchemaRule;
 use N1ebieski\KSEFClient\Validator\Validator;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FormCode;
 use N1ebieski\KSEFClient\ValueObjects\SchemaPath;
 
 /** @var AbstractTestCase $this */
@@ -49,6 +50,7 @@ dataset('validResponseProvider', function (): array {
         (new SendRequestFixture())->withFakturaFixture(new FakturaZZaplataCzesciowaFixture())->withName('faktura z zapłatą częściową'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaZwolnienieVatFixture())->withName('faktura zwolnięcie VAT'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaKorygujacaPozaKsefFixture())->withName('faktura korygująca poza KSEF'),
+        (new SendRequestFixture())->withFakturaFixture(new FakturaSprzedazyTowaruRolniczegoFixture())->withFormCode(FormCode::FaRr1)->withName('faktura sprzedaży towaru rolniczego'),
     ];
 
     $responses = [
@@ -74,7 +76,7 @@ test('valid response', function (SendRequestFixture $requestFixture, SendRespons
     $request = SendRequest::from($requestFixture->data);
 
     Validator::validate($request->toXml(), [
-        new SchemaRule(SchemaPath::from(Utility::basePath('resources/xsd/faktura/schemat.xsd')))
+        new SchemaRule(SchemaPath::from($request->formCode->getSchemaPath()))
     ]);
 
     expect($request)->toBeFixture($requestFixture->data);
@@ -82,7 +84,7 @@ test('valid response', function (SendRequestFixture $requestFixture, SendRespons
     $response = $clientStub->sessions()->online()->send($requestFixture->data)->object();
 
     expect($response)->toBeFixture($responseFixture->data);
-})->with('validResponseProvider');
+})->with('validResponseProvider')->only();
 
 test('invalid response', function (): void {
     $responseFixture = new ErrorResponseFixture();

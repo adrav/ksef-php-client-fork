@@ -9,6 +9,7 @@ use N1ebieski\KSEFClient\Contracts\XmlSerializableInterface;
 use N1ebieski\KSEFClient\Requests\AbstractRequest;
 use N1ebieski\KSEFClient\Support\Optional;
 use N1ebieski\KSEFClient\ValueObjects\Requests\ReferenceNumber;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FormCode;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\HashOfCorrectedInvoice;
 
 final class SendXmlRequest extends AbstractRequest implements XmlSerializableInterface, BodyInterface
@@ -16,6 +17,7 @@ final class SendXmlRequest extends AbstractRequest implements XmlSerializableInt
     public function __construct(
         public readonly ReferenceNumber $referenceNumber,
         public readonly string $faktura,
+        public readonly FormCode $formCode = FormCode::Fa3,
         public readonly Optional | bool $offlineMode = new Optional(),
         public readonly Optional | HashOfCorrectedInvoice $hashOfCorrectedInvoice = new Optional()
     ) {

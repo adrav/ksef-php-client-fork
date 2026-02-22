@@ -15,4 +15,6 @@ enum XmlNamespace: string
     case Xsi = 'http://www.w3.org/2001/XMLSchema-instance';
 
     case Fa3 = 'http://crd.gov.pl/wzor/2025/06/25/13775/';
+
+    case FaRr1 = 'http://crd.gov.pl/wzor/2026/02/17/14164/';
 }

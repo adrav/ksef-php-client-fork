@@ -15,8 +15,8 @@ use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\DTOs\Config;
 use N1ebieski\KSEFClient\DTOs\HttpClient\Request;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Faktura;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Faktura as FakturaRR;
 use N1ebieski\KSEFClient\Requests\AbstractHandler;
-use N1ebieski\KSEFClient\Support\Utility;
 use N1ebieski\KSEFClient\Validator\Rules\Xml\SchemaRule;
 use N1ebieski\KSEFClient\Validator\Validator;
 use N1ebieski\KSEFClient\ValueObjects\EncryptionKey;
@@ -49,7 +49,7 @@ final class OpenAndSendHandler extends AbstractHandler
 
         $documents = match (true) {
             $request instanceof OpenAndSendRequest => array_map(
-                fn (Faktura $faktura): string => $faktura->toXml(),
+                fn (Faktura | FakturaRR $faktura): string => $faktura->toXml(),
                 $request->faktury
             ),
             default => $request->faktury,
@@ -58,7 +58,7 @@ final class OpenAndSendHandler extends AbstractHandler
         if (is_array($documents) && $this->config->validateXml) {
             foreach ($documents as $document) {
                 Validator::validate($document, [
-                    new SchemaRule(SchemaPath::from(Utility::basePath('resources/xsd/faktura/schemat.xsd')))
+                    new SchemaRule(SchemaPath::from($request->formCode->getSchemaPath()))
                 ]);
             }
         }

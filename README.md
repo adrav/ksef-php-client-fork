@@ -12,7 +12,7 @@ Main features:
 - Support for authorization using qualified certificates, KSeF certificates, KSeF tokens, and trusted ePUAP signatures (manual mode)
 - Support for signatures with both RSA and EC keys
 - Support for async batch send multiple invoices
-- Logical invoice structure mapped to DTOs and ValueObjects
+- Logical FA (3) and FA_RR (1) invoices structure mapped to DTOs and ValueObjects
 - Automatic access token refresh
 - Automatic XML document validation based on XSD schemas
 - CSR (Certificate Signing Request) handling
@@ -95,6 +95,8 @@ Main features:
         - [Permissions Common](#permissions-common)
             - [Permissions Common Grants Revoke](#permissions-common-grants-revoke)
         - [Permissions Query](#permissions-query)
+            - [Permissions Query Authorizations](#permissions-query-authorizations)
+                - [Permissions Query Authorizations Grants](#permissions-query-authorizations-grants)        
             - [Permissions Query Personal](#permissions-query-personal)
                 - [Permissions Query Personal Grants](#permissions-query-personal-grants)
             - [Permissions Query Subunits](#permissions-query-subunits)
@@ -1015,6 +1017,24 @@ $response = $client->permissions()->common()->revoke(
 
 #### Permissions Query
 
+##### Permissions Query Authorizations
+
+<details>
+    <summary>
+        <h5>Permissions Query Authorizations Grants</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1authorizations~1grants/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\Authorizations\Grants\GrantsRequest;
+
+$response = $client->permissions()->query()->authorizations()->grants(
+    new GrantsRequest(...)
+)->object();
+```
+</details>
+
 ##### Permissions Query Personal
 
 <details>
@@ -1675,6 +1695,8 @@ $fakturaFixture = (new FakturaSprzedazyTowaruFixture())
     ->withNip($nip)
     ->withTodayDate();
 
+// For sending FA (3) use Sessions\Faktura
+// For sending FA_RR (1) use Sessions\FakturaRR\Faktura
 $faktura = Faktura::from($fakturaFixture->data);
 
 // For sending invoice as DTO use SendRequest or array
@@ -1918,6 +1940,8 @@ $fakturaFixture = (new FakturaSprzedazyTowaruFixture())
     ->withNip($nip)
     ->withRandomInvoiceNumber();
 
+// For creating FA (3) use Sessions\Faktura
+// For creating FA_RR (1) use Sessions\FakturaRR\Faktura
 $faktura = Faktura::from($fakturaFixture->data);
 
 $generateQRCodesHandler = new GenerateQRCodesHandler(

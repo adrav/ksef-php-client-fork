@@ -21,4 +21,8 @@ enum RodzajFaktury: string implements EnumInterface
     case KorZal = 'KOR_ZAL';
 
     case KorRoz = 'KOR_ROZ';
+
+    case VatRr = 'VAT_RR';
+
+    case KorVatRr = 'KOR_VAT_RR';
 }

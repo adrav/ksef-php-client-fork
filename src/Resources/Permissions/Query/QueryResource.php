@@ -8,6 +8,7 @@ use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Permissions\Query\QueryResourceInterface;
 use N1ebieski\KSEFClient\Resources\AbstractResource;
+use N1ebieski\KSEFClient\Resources\Permissions\Query\Authorizations\AuthorizationsResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Personal\PersonalResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Subunits\SubunitsResource;
 use Throwable;
@@ -18,6 +19,15 @@ final class QueryResource extends AbstractResource implements QueryResourceInter
         private readonly HttpClientInterface $client,
         private readonly ExceptionHandlerInterface $exceptionHandler
     ) {
+    }
+
+    public function authorizations(): AuthorizationsResource
+    {
+        try {
+            return new AuthorizationsResource($this->client, $this->exceptionHandler);
+        } catch (Throwable $throwable) {
+            throw $this->exceptionHandler->handle($throwable);
+        }
     }
 
     public function personal(): PersonalResource

@@ -11,7 +11,6 @@ use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
 use N1ebieski\KSEFClient\DTOs\Config;
 use N1ebieski\KSEFClient\DTOs\HttpClient\Request;
 use N1ebieski\KSEFClient\Requests\AbstractHandler;
-use N1ebieski\KSEFClient\Support\Utility;
 use N1ebieski\KSEFClient\Validator\Rules\Xml\SchemaRule;
 use N1ebieski\KSEFClient\Validator\Validator;
 use N1ebieski\KSEFClient\ValueObjects\EncryptionKey;
@@ -39,7 +38,7 @@ final class SendHandler extends AbstractHandler
 
         if ($this->config->validateXml) {
             Validator::validate($xml, [
-                new SchemaRule(SchemaPath::from(Utility::basePath('resources/xsd/faktura/schemat.xsd')))
+                new SchemaRule(SchemaPath::from($request->formCode->getSchemaPath()))
             ]);
         }
 
