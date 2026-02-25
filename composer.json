@@ -1,7 +1,7 @@
 {
     "name": "n1ebieski/ksef-php-client",
     "description": "PHP API client that allows you to interact with the API Krajowego Systemu e-Faktur",
-    "version": "0.28.0",
+    "version": "0.29.0",
     "license": "MIT",
     "authors": [
         {
@@ -24,6 +24,7 @@
         "psr/http-client-implementation": "^1.0.1",
         "psr/http-factory-implementation": "^1.1",
         "psr/http-message": "^1.1.0 || ^2.0.0",
+        "psr/simple-cache": "^3.0",
         "cuyz/valinor": "^1.15 || ^2.0",
         "krowinski/bcmath-extended": "^6.0",
         "psr-discovery/log-implementations": "^1.0",
@@ -42,7 +43,8 @@
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.36 || ^3.0 || ^4.0",
         "pestphp/pest-plugin-drift": "^2.5 || ^3.0 || ^4.0",
-        "friendsofphp/php-cs-fixer": "^3.88"
+        "friendsofphp/php-cs-fixer": "^3.88",
+        "symfony/cache": "^6.4"
     },
     "autoload": {
         "psr-4": {
