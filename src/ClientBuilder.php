@@ -13,6 +13,7 @@ use N1ebieski\KSEFClient\Actions\ConvertDerToPem\ConvertDerToPemHandler;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
+use N1ebieski\KSEFClient\Contracts\Requests\Security\PublicKeyCertificates\PublicKeyCertificatesResponseInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\ClientResourceInterface;
 use N1ebieski\KSEFClient\DTOs\Config;
 use N1ebieski\KSEFClient\DTOs\Requests\Auth\ContextIdentifierGroup;
@@ -54,6 +55,7 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\EncryptedKey;
 use Psr\Http\Client\ClientInterface as BaseClientInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use SensitiveParameter;
 use Throwable;
@@ -89,6 +91,12 @@ final class ClientBuilder
     private int $asyncMaxConcurrency = 8;
 
     private bool $validateXml = true;
+
+    private ?CacheInterface $simpleCache = null;
+
+    private const PUBLIC_KEY_CERTIFICATES_CACHE_KEY = 'ksef_public_key_certificates';
+
+    private int $defaultCacheTTL = 43200;
 
     public function __construct()
     {
@@ -296,6 +304,20 @@ final class ClientBuilder
         return $this;
     }
 
+    /**
+     * Sets the cache implementation and the default time-to-live (TTL) for cache entries.
+     *
+     * @param CacheInterface $simpleCache The cache implementation to use.
+     * @param int $defaultTTL The default time-to-live in seconds for cache entries. Defaults to 43200 seconds (12 hours).
+     * @return self Returns the current instance for method chaining.
+     */
+    public function withCache(CacheInterface $simpleCache, int $defaultTTL = 43200): self
+    {
+        $this->simpleCache = $simpleCache;
+        $this->defaultCacheTTL = $defaultTTL;
+        return $this;
+    }
+
     public function build(): ClientResource
     {
         $config = new Config(
@@ -388,13 +410,42 @@ final class ClientBuilder
         );
     }
 
+    /**
+     * Retrieves public key certificates from the client resource, optionally using a cache.
+     *
+     * @param ClientResourceInterface $client The client resource used to fetch the public key certificates.
+     * @return PublicKeyCertificatesResponseInterface Returns an instance of PublicKeyCertificatesResponseInterface containing the public key certificates.
+     */
+    private function getPublicKeyCertificates(ClientResourceInterface $client): PublicKeyCertificatesResponseInterface
+    {
+        if (!$this->simpleCache) {
+            return $client->security()->publicKeyCertificates();
+        }
+
+        $certificatesResponse = $this->simpleCache->get(self::PUBLIC_KEY_CERTIFICATES_CACHE_KEY);
+
+        if ($certificatesResponse instanceof PublicKeyCertificatesResponseInterface) {
+            return $certificatesResponse;
+        }
+
+        $certificatesResponse = $client->security()->publicKeyCertificates();
+
+        $this->simpleCache->set(
+            self::PUBLIC_KEY_CERTIFICATES_CACHE_KEY,
+            $certificatesResponse,
+            $this->defaultCacheTTL
+        );
+
+        return $certificatesResponse;
+    }
+
     private function handleEncryptedKey(ClientResourceInterface $client): EncryptedKey
     {
         if ($this->encryptionKey instanceof EncryptionKey === false) {
             throw new RuntimeException('Encryption key is not set');
         }
 
-        $securityResponse = $client->security()->publicKeyCertificates();
+        $securityResponse = $this->getPublicKeyCertificates($client);
 
         $firstSymmetricKeyEncryptionCertificate = $securityResponse
             ->getFirstByPublicKeyCertificateUsage(PublicKeyCertificateUsage::SymmetricKeyEncryption);
