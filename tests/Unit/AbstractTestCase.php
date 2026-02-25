@@ -19,6 +19,7 @@ use N1ebieski\KSEFClient\ValueObjects\Mode;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\SimpleCache\CacheInterface;
 
 abstract class AbstractTestCase extends TestCase
 {
@@ -55,10 +56,13 @@ abstract class AbstractTestCase extends TestCase
         return $httpClientStub;
     }
 
-    public function createClientStub(AbstractResponseFixture $responseFixture): ClientResourceInterface
-    {
+    public function createClientStub(
+        AbstractResponseFixture $responseFixture,
+        ?HttpClientInterface $httpClientStub = null,
+        ?CacheInterface $cacheStub = null
+    ): ClientResourceInterface {
         /** @var MockInterface&HttpClientInterface $httpClientStub */
-        $httpClientStub = $this->createHttpClientStub($responseFixture);
+        $httpClientStub ??= $this->createHttpClientStub($responseFixture);
 
         return new ClientResource(
             client: $httpClientStub,
@@ -68,6 +72,7 @@ abstract class AbstractTestCase extends TestCase
                 encryptionKey: EncryptionKeyFactory::makeRandom()
             ),
             exceptionHandler: new ExceptionHandler(),
+            cache: $cacheStub,
         );
     }
 }
