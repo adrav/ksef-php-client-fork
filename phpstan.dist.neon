@@ -1,31 +1,37 @@
 parameters:
-    level: 10
-    phpVersion: 80100
-    paths:
-        - src/
-        - bin/
-        - tests/
-    universalObjectCratesClasses:
-        - N1ebieski\KSEFClient\Contracts\ValueAwareInterface
-        - N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface
-        - N1ebieski\KSEFClient\Testing\Fixtures\AbstractFixture
-        - N1ebieski\KSEFClient\Testing\Fixtures\Requests\AbstractResponseFixture
-        - N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaAbstractFixture
-    excludePaths:
-        - ./src/Overrides/Rector/Php74/Rector/Closure/ClosureToArrowFunctionRector.php
-        - ./src/Testing/Fixtures
+	level: 10
+	phpVersion: 80100
+	paths:
+		- src/
+		- bin/
+		- tests/
+	universalObjectCratesClasses:
+		- N1ebieski\KSEFClient\Contracts\ValueAwareInterface
+		- N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface
+		- N1ebieski\KSEFClient\Testing\Fixtures\AbstractFixture
+		- N1ebieski\KSEFClient\Testing\Fixtures\Requests\AbstractResponseFixture
+		- N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaAbstractFixture
+	excludePaths:
+		- ./src/Overrides/Rector/Php74/Rector/Closure/ClosureToArrowFunctionRector.php
+		- ./src/Testing/Fixtures
 
-    ignoreErrors:
-        - '#^Parameter \#1 \$node of method DOMDocument::importNode\(\) expects DOMNode, DOMElement\|null given.$#'
-        - '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage::andReturn#'
-        - '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy::with\(\).$#'
-        - '#^Call to an undefined method Pest\\Expectation<([a-zA-Z0-9\\]+)\|null>::toBeFixture\(\).$#'
-        - '#^Call to an undefined method Pest\\Expectation<array<string, mixed>\|object\|null>::toBeFixture\(\).$#'
-        - '#^Call to an undefined method Pest\\Expectation<\(Closure\)\|null>::toBeExceptionFixture\(\).$#'
-        - '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy::throws\(\).$#'
-        -
-            message: '#Parameter \#1 \$exception of method Pest\\Mixins\\Expectation<\(Closure\)\|null>::toThrow\(\) expects \(Closure\(Throwable\):\s+mixed\)\|string\|Throwable, Closure\([A-Za-z0-9_\\\\]+Exception\): true given#'
-            path: tests/*     
-        -
-            message: '#Parameter \#1 \$exception of method Pest\\Mixins\\Expectation<\(Closure\)\|null>::toThrow\(\) expects \(Closure\(Throwable\):\s+mixed\)\|string\|Throwable, Closure\([A-Za-z0-9_\\]+Exception\): void given#'
-            path: tests/*               
+	ignoreErrors:
+		- '#^Parameter \#1 \$node of method DOMDocument::importNode\(\) expects DOMNode, DOMElement\|null given.$#'
+		- '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage::andReturn#'
+		- '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy::with\(\).$#'
+		- '#^Call to an undefined method Pest\\Expectation<([a-zA-Z0-9\\]+)\|null>::toBeFixture\(\).$#'
+		- '#^Call to an undefined method Pest\\Expectation<array<string, mixed>\|object\|null>::toBeFixture\(\).$#'
+		- '#^Call to an undefined method Pest\\Expectation<\(Closure\)\|null>::toBeExceptionFixture\(\).$#'
+		- '#^Call to an undefined method Pest\\PendingCalls\\TestCall\|Pest\\Support\\HigherOrderTapProxy::throws\(\).$#'
+		-
+			message: '#Parameter \#1 \$exception of method Pest\\Mixins\\Expectation<\(Closure\)\|null>::toThrow\(\) expects \(Closure\(Throwable\):\s+mixed\)\|string\|Throwable, Closure\([A-Za-z0-9_\\\\]+Exception\): true given#'
+			path: tests/*     
+		-
+			message: '#Parameter \#1 \$exception of method Pest\\Mixins\\Expectation<\(Closure\)\|null>::toThrow\(\) expects \(Closure\(Throwable\):\s+mixed\)\|string\|Throwable, Closure\([A-Za-z0-9_\\]+Exception\): void given#'
+			path: tests/*   
+		-
+			message: '#^Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage::(never|once)\(\).$#'
+			path: tests/*
+		-
+			message: '#^Cannot call method (andReturn(Self)?|withArgs)\(\) on mixed\.$#'
+			path: tests/*                        
