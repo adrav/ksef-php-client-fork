@@ -30,6 +30,7 @@ use N1ebieski\KSEFClient\ValueObjects\EncryptionKey;
 use N1ebieski\KSEFClient\ValueObjects\RefreshToken;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\EncryptedKey;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use Throwable;
 
@@ -40,6 +41,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         private Config $config,
         private readonly ExceptionHandlerInterface $exceptionHandler,
         private readonly ?LoggerInterface $logger = null,
+        private readonly ?CacheInterface $cache = null
     ) {
     }
 
@@ -153,7 +155,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
     public function security(): SecurityResource
     {
         try {
-            return new SecurityResource($this->client, $this->exceptionHandler);
+            return new SecurityResource($this->client, $this->config, $this->exceptionHandler, $this->cache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

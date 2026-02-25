@@ -189,6 +189,7 @@ $client = (new ClientBuilder())
     ->withApiUrl($_ENV['KSEF_API_URL']) // Optional, default is set by Mode selection
     ->withLatarniaApiUrl($_ENV['KSEF_LATARNIA_API_URL']) // Optional, default is set by Mode selection
     ->withHttpClient(new \GuzzleHttp\Client(...)) // Optional PSR-18 implementation, default is set by Psr18ClientDiscovery::find()
+    ->withCache(new \Symfony\Component\Cache\Psr16Cache(...), $_ENV['CACHE_TTL']) // Optional PSR-16 implementation, default is null
     ->withLogger(new \Monolog\Logger(...)) // Optional PSR-3 implementation, default is set by PsrDiscovery\Discover::log()
     ->withLogPath($_ENV['PATH_TO_LOG_FILE'], $_ENV['LOG_LEVEL']) // Optional, level: null disables logging
     ->withExceptionHandler(new \ExceptionHandler(...)) // Optional N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface implmentation

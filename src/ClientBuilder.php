@@ -54,6 +54,7 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\EncryptedKey;
 use Psr\Http\Client\ClientInterface as BaseClientInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use SensitiveParameter;
 use Throwable;
@@ -65,6 +66,8 @@ final class ClientBuilder
     private ?LoggerInterface $logger = null;
 
     private ExceptionHandlerInterface $exceptionHandler;
+
+    private ?CacheInterface $cache = null;
 
     private Mode $mode = Mode::Production;
 
@@ -89,6 +92,8 @@ final class ClientBuilder
     private int $asyncMaxConcurrency = 8;
 
     private bool $validateXml = true;
+
+    private int $cacheTTL = 43200;
 
     public function __construct()
     {
@@ -296,6 +301,20 @@ final class ClientBuilder
         return $this;
     }
 
+    /**
+     * Sets the cache implementation and the default time-to-live (TTL) for cache entries.
+     *
+     * @param CacheInterface $cache The cache implementation to use.
+     * @param int $cacheTTL The default time-to-live in seconds for cache entries.
+     */
+    public function withCache(CacheInterface $cache, int $cacheTTL = 43200): self
+    {
+        $this->cache = $cache;
+        $this->cacheTTL = $cacheTTL;
+
+        return $this;
+    }
+
     public function build(): ClientResource
     {
         $config = new Config(
@@ -303,6 +322,7 @@ final class ClientBuilder
             latarniaBaseUri: new BaseUri($this->latarniaApiUrl->value),
             asyncMaxConcurrency: $this->asyncMaxConcurrency,
             validateXml: $this->validateXml,
+            cacheTTL: $this->cacheTTL,
             accessToken: $this->accessToken,
             refreshToken: $this->refreshToken,
             encryptionKey: $this->encryptionKey,
@@ -320,7 +340,8 @@ final class ClientBuilder
             client: $httpClient,
             config: $config,
             exceptionHandler: $this->exceptionHandler,
-            logger: $this->logger
+            logger: $this->logger,
+            cache: $this->cache
         );
 
         if ($this->encryptionKey instanceof EncryptionKey) {

@@ -15,4 +15,9 @@ interface ConfigInterface
      * @var int
      */
     public const BATCH_MAX_PART_SIZE = 104857600; // 100 MB
+
+    /**
+     * @var string
+     */
+    public const PUBLIC_KEY_CERTIFICATES_CACHE_KEY = 'ksef_public_key_certificates';
 }
