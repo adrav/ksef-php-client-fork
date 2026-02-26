@@ -318,6 +318,7 @@ final class ClientBuilder
     public function build(): ClientResource
     {
         $config = new Config(
+            mode: $this->mode,
             baseUri: new BaseUri($this->apiUrl->value),
             latarniaBaseUri: new BaseUri($this->latarniaApiUrl->value),
             asyncMaxConcurrency: $this->asyncMaxConcurrency,

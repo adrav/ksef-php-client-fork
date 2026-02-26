@@ -28,7 +28,7 @@ final class PublicKeyCertificatesHandler extends AbstractHandler
             return $this->getPublicKeyCertificatesResponse();
         }
 
-        $response = $this->cache->get(ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY);
+        $response = $this->cache->get($this->getCacheKeyForMode());
 
         if ($response instanceof PublicKeyCertificatesResponse) {
             return $response;
@@ -37,12 +37,17 @@ final class PublicKeyCertificatesHandler extends AbstractHandler
         $response = $this->getPublicKeyCertificatesResponse();
 
         $this->cache->set(
-            ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY,
+            $this->getCacheKeyForMode(),
             $response,
             $this->config->cacheTTL
         );
 
         return $response;
+    }
+
+    private function getCacheKeyForMode(): string
+    {
+        return sprintf(ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY, $this->config->mode->value);
     }
 
     private function getPublicKeyCertificatesResponse(): PublicKeyCertificatesResponse

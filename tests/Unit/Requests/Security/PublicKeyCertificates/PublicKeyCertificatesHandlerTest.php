@@ -9,6 +9,7 @@ use N1ebieski\KSEFClient\HttpClient\Response;
 use N1ebieski\KSEFClient\Requests\Security\PublicKeyCertificates\PublicKeyCertificatesResponse;
 use N1ebieski\KSEFClient\Testing\Fixtures\Requests\Security\PublicKeyCertificates\PublicKeyCertificatesResponseFixture;
 use N1ebieski\KSEFClient\Tests\Unit\AbstractTestCase;
+use N1ebieski\KSEFClient\ValueObjects\Mode;
 use Psr\SimpleCache\CacheInterface;
 
 /** @var AbstractTestCase $this */
@@ -74,7 +75,7 @@ test('fetches from source and saves to cache when cache has no value', function 
     $cacheStub->shouldReceive('set')
         ->once()
         ->withArgs(fn (string $key, mixed $value, int $ttl): bool =>
-            $key === ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY
+            $key === sprintf(ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY, Mode::Test->value)
                 && $value instanceof PublicKeyCertificatesResponse
                 && $ttl === 43200)
         ->andReturn(true);

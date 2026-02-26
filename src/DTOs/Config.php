@@ -9,12 +9,14 @@ use N1ebieski\KSEFClient\Support\AbstractDTO;
 use N1ebieski\KSEFClient\ValueObjects\AccessToken;
 use N1ebieski\KSEFClient\ValueObjects\EncryptionKey;
 use N1ebieski\KSEFClient\ValueObjects\HttpClient\BaseUri;
+use N1ebieski\KSEFClient\ValueObjects\Mode;
 use N1ebieski\KSEFClient\ValueObjects\RefreshToken;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\EncryptedKey;
 
 final class Config extends AbstractDTO implements ConfigInterface
 {
     public function __construct(
+        public readonly Mode $mode,
         public readonly BaseUri $baseUri,
         public readonly BaseUri $latarniaBaseUri,
         public readonly int $asyncMaxConcurrency = 8,

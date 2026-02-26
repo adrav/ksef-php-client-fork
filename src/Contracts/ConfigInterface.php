@@ -19,5 +19,5 @@ interface ConfigInterface
     /**
      * @var string
      */
-    public const PUBLIC_KEY_CERTIFICATES_CACHE_KEY = 'ksef_public_key_certificates';
+    public const PUBLIC_KEY_CERTIFICATES_CACHE_KEY = '%s_ksef_public_key_certificates';
 }

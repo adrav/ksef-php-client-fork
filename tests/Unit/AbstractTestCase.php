@@ -67,6 +67,7 @@ abstract class AbstractTestCase extends TestCase
         return new ClientResource(
             client: $httpClientStub,
             config: new Config(
+                mode: Mode::Test,
                 baseUri: new BaseUri(Mode::Test->getApiUrl()->value),
                 latarniaBaseUri: new BaseUri(Mode::Test->getLatarniaApiUrl()->value),
                 encryptionKey: EncryptionKeyFactory::makeRandom()
