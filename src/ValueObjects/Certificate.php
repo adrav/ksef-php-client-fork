@@ -67,7 +67,12 @@ final class Certificate extends AbstractValueObject
 
     public function getSerialNumber(): string
     {
-        return BC::hexdec($this->info['serialNumberHex']);
+        return BC::hexdec($this->getSerialNumberHex());
+    }
+
+    public function getSerialNumberHex(): string
+    {
+        return $this->info['serialNumberHex'];
     }
 
     public function getIssuer(): string

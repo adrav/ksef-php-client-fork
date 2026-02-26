@@ -12,7 +12,6 @@ use N1ebieski\KSEFClient\DTOs\QRCodes;
 use N1ebieski\KSEFClient\DTOs\Requests\Auth\ContextIdentifierGroup;
 use N1ebieski\KSEFClient\Support\Str;
 use N1ebieski\KSEFClient\ValueObjects\Certificate;
-use N1ebieski\KSEFClient\ValueObjects\CertificateSerialNumber;
 use N1ebieski\KSEFClient\ValueObjects\PrivateKeyType;
 use N1ebieski\KSEFClient\ValueObjects\QRCode;
 use N1ebieski\KSEFClient\ValueObjects\Requests\KsefNumber;
@@ -58,7 +57,6 @@ final class GenerateQRCodesHandler extends AbstractHandler
         if (
             ! ($action->ksefNumber instanceof KsefNumber)
             && $action->certificate instanceof Certificate
-            && $action->certificateSerialNumber instanceof CertificateSerialNumber
             && $action->contextIdentifierGroup instanceof ContextIdentifierGroup
         ) {
             $code2Parts = [
@@ -66,7 +64,7 @@ final class GenerateQRCodesHandler extends AbstractHandler
                 $action->contextIdentifierGroup->identifierGroup->getIdentifier()->getType(),
                 (string) $action->contextIdentifierGroup->identifierGroup->getIdentifier(),
                 (string) $action->nip,
-                (string) $action->certificateSerialNumber,
+                $action->certificate->getSerialNumberHex(),
                 $invoiceBase64
             ];
 

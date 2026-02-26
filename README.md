@@ -1929,8 +1929,6 @@ use N1ebieski\KSEFClient\ValueObjects\NIP;
 
 $nip = 'NIP_NUMBER';
 
-// From https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Certyfikaty/paths/~1certificates~1query/post
-$certificateSerialNumber = CertificateSerialNumber::from($_ENV['CERTIFICATE_SERIAL_NUMBER']);
 // Remember: this certificate must be "Offline" type, not "Authentication"
 $certificate = CertificateFactory::makeFromCertificatePath(
     CertificatePath::from($_ENV['PATH_TO_CERTIFICATE'], $_ENV['CERTIFICATE_PASSPHRASE'])
@@ -1964,7 +1962,6 @@ $qrCodes = $generateQRCodesHandler->handle(new GenerateQRCodesAction(
     invoiceCreatedAt: $faktura->fa->p_1->value,
     document: $faktura->toXml(),
     certificate: $certificate,
-    certificateSerialNumber: $certificateSerialNumber,
     contextIdentifierGroup: $contextIdentifierGroup
 ));
 
