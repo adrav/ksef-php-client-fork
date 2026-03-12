@@ -25,8 +25,8 @@ final class ZipDocumentsHandler extends AbstractHandler
             throw new RuntimeException('Unable to open zip file.');
         }
 
-        foreach ($action->documents as $document) {
-            $fileName = uniqid('xml_', true) . '.xml';
+        foreach ($action->documents as $index => $document) {
+            $fileName = sprintf('%05d.xml', $index + 1);
 
             $zip->addFromString($fileName, $document);
         }

@@ -8,6 +8,9 @@ use N1ebieski\KSEFClient\Contracts\BodyInterface;
 use N1ebieski\KSEFClient\Requests\AbstractRequest;
 use N1ebieski\KSEFClient\Requests\Sessions\Batch\OpenAndSend\Concerns\HasToBody;
 use N1ebieski\KSEFClient\Support\Optional;
+use N1ebieski\KSEFClient\Validator\Rules\Array\MaxRule;
+use N1ebieski\KSEFClient\Validator\Rules\Array\MinRule;
+use N1ebieski\KSEFClient\Validator\Validator;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FormCode;
 
 final class OpenAndSendXmlRequest extends AbstractRequest implements BodyInterface
@@ -15,12 +18,27 @@ final class OpenAndSendXmlRequest extends AbstractRequest implements BodyInterfa
     use HasToBody;
 
     /**
+     * @var array<int, string> $faktury
+     */
+    public readonly array $faktury;
+
+    /**
      * @param array<int, string> $faktury
      */
     public function __construct(
         public readonly FormCode $formCode,
-        public readonly array $faktury,
+        array $faktury,
         public readonly Optional | bool $offlineMode = new Optional(),
     ) {
+        Validator::validate([
+            'faktury' => $faktury,
+        ], [
+            'faktury' => [
+                new MinRule(1),
+                new MaxRule(10000)
+            ]
+        ]);
+
+        $this->faktury = $faktury;
     }
 }

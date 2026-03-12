@@ -65,7 +65,12 @@ test('valid response', function (OpenAndSendRequestFixture $requestFixture, Open
 
 test('invalid response without EncryptedKey', function (): void {
     /** @var AbstractTestCase $this */
-    $requestFixture = new OpenAndSendRequestFixture();
+    $requestFixture = (new OpenAndSendRequestFixture())->withFakturaFixtures(array_map(
+        fn (): AbstractFakturaFixture => (new FakturaSprzedazyTowaruFixture())
+            ->withTodayDate()
+            ->withRandomInvoiceNumber(),
+        range(1, 3)
+    ));
     $responseFixture = new OpenAndSendResponseFixture();
 
     $clientStub = $this->createClientStubWithFixture($responseFixture);
