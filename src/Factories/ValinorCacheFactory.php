@@ -14,7 +14,7 @@ final class ValinorCacheFactory extends AbstractFactory
     /**
      * @var string
      */
-    private const NAMESPACE = 'valinor-cache';
+    public const NAMESPACE = 'valinor-cache';
 
     public static function make(?CachePath $path = null, bool $watcher = false): Cache
     {
