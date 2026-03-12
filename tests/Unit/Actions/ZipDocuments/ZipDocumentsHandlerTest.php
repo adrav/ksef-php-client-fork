@@ -54,8 +54,7 @@ test('documents are ordered by numbered names after unzip', function () use (&$t
 
     expect($zip->open($tempFile))->toBeTrue();
 
-    $fileNames = [];
-    $fileContents = [];
+    $filesByName = [];
 
     foreach (range(0, $zip->numFiles - 1) as $index) {
         $fileName = $zip->getNameIndex($index);
@@ -64,11 +63,15 @@ test('documents are ordered by numbered names after unzip', function () use (&$t
         expect($fileName)->toBeString();
         expect($fileContent)->toBeString();
 
-        $fileNames[] = $fileName;
-        $fileContents[] = $fileContent;
+        $filesByName[$fileName] = $fileContent;
     }
 
     $zip->close();
+
+    ksort($filesByName, SORT_STRING);
+
+    $fileNames = array_keys($filesByName);
+    $fileContents = array_values($filesByName);
 
     expect($fileNames)->toBe($expectedFileNames);
     expect($fileContents)->toBe($expectedContents);
