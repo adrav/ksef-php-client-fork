@@ -324,6 +324,14 @@ final class Fa extends AbstractDTO implements DomSerializableInterface
             }
         }
 
+        if ( ! $this->zaliczkaCzesciowa instanceof Optional) {
+            foreach ($this->zaliczkaCzesciowa as $zaliczkaCzesciowa) {
+                $zaliczkaCzesciowa = $dom->importNode($zaliczkaCzesciowa->toDom()->documentElement, true);
+
+                $fa->appendChild($zaliczkaCzesciowa);
+            }
+        }
+
         if ($this->fp instanceof FP) {
             $fp = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'FP');
             $fp->appendChild($dom->createTextNode((string) $this->fp->value));

@@ -16,6 +16,7 @@ use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaSprzedaz
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaUproszczonaFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaVatMarzaFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaWWalucieObcejFixture;
+use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaZaliczkaCzesciowaFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaZaliczkowaZDodatkowymNabywcaFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaZVatUEFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaZwolnienieVatFixture;
@@ -44,6 +45,7 @@ dataset('validResponseProvider', function (): array {
         (new SendRequestFixture())->withFakturaFixture(new FakturaKorygujacaUniwersalnaFixture())->withName('faktura korygująca uniwersalna'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaSprzedazyUslugLeasinguOperacyjnegoFixture())->withName('faktura sprzedaży usług leasingu operacyjnego'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaZaliczkowaZDodatkowymNabywcaFixture())->withName('faktura zaliczkowa z dodatkowym nabywcą'),
+        (new SendRequestFixture())->withFakturaFixture(new FakturaZaliczkaCzesciowaFixture())->withName('faktura zaliczka częściowa'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaUproszczonaFixture())->withName('faktura uproszczona'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaVatMarzaFixture())->withName('faktura VAT marża'),
         (new SendRequestFixture())->withFakturaFixture(new FakturaWWalucieObcejFixture())->withName('faktura w walucie obcej'),
