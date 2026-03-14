@@ -99,6 +99,7 @@ Main features:
                 - [Permissions Query Authorizations Grants](#permissions-query-authorizations-grants)        
             - [Permissions Query Entities](#permissions-query-entities)
                 - [Permissions Query Entities Grants](#permissions-query-entities-grants)
+                - [Permissions Query Entities Roles](#permissions-query-entities-roles)
             - [Permissions Query EuEntities](#permissions-query-euentities)
                 - [Permissions Query EuEntities Grants](#permissions-query-euentities-grants)
             - [Permissions Query Personal](#permissions-query-personal)
@@ -1081,6 +1082,22 @@ use N1ebieski\KSEFClient\Requests\Permissions\Query\Entities\Grants\GrantsReques
 
 $response = $client->permissions()->query()->entities()->grants(
     new GrantsRequest(...)
+)->object();
+```
+</details>
+
+<details>
+    <summary>
+        <h5>Permissions Query Entities Roles</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1entities~1roles/get
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\Entities\Roles\RolesRequest;
+
+$response = $client->permissions()->query()->entities()->roles(
+    new RolesRequest(...)
 )->object();
 ```
 </details>
