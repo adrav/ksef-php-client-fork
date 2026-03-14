@@ -21,6 +21,7 @@ use N1ebieski\KSEFClient\Resources\Certificates\CertificatesResource;
 use N1ebieski\KSEFClient\Resources\Invoices\InvoicesResource;
 use N1ebieski\KSEFClient\Resources\Latarnia\LatarniaResource;
 use N1ebieski\KSEFClient\Resources\Limits\LimitsResource;
+use N1ebieski\KSEFClient\Resources\Peppol\PeppolResource;
 use N1ebieski\KSEFClient\Resources\Permissions\PermissionsResource;
 use N1ebieski\KSEFClient\Resources\Security\SecurityResource;
 use N1ebieski\KSEFClient\Resources\Sessions\SessionsResource;
@@ -213,6 +214,15 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
             $this->refreshTokenIfExpired();
 
             return new TokensResource($this->client, $this->exceptionHandler, $this->valinorCache);
+        } catch (Throwable $throwable) {
+            throw $this->exceptionHandler->handle($throwable);
+        }
+    }
+
+    public function peppol(): PeppolResource
+    {
+        try {
+            return new PeppolResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

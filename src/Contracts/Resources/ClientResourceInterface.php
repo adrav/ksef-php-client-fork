@@ -11,6 +11,7 @@ use N1ebieski\KSEFClient\Contracts\Resources\Certificates\CertificatesResourceIn
 use N1ebieski\KSEFClient\Contracts\Resources\Invoices\InvoicesResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Latarnia\LatarniaResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Limits\LimitsResourceInterface;
+use N1ebieski\KSEFClient\Contracts\Resources\Peppol\PeppolResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Permissions\PermissionsResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Security\SecurityResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Sessions\SessionsResourceInterface;
@@ -52,6 +53,8 @@ interface ClientResourceInterface
     public function certificates(): CertificatesResourceInterface;
 
     public function tokens(): TokensResourceInterface;
+
+    public function peppol(): PeppolResourceInterface;
 
     public function testdata(): TestdataResourceInterface;
 

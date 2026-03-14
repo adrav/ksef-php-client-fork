@@ -121,6 +121,8 @@ Main features:
         - [Tokens List](#tokens-list)
         - [Tokens Status](#tokens-status)
         - [Tokens Revoke](#tokens-revoke)
+    - [Peppol](#peppol)
+        - [Peppol Query](#peppol-query)
     - [Testdata](#testdata)
         - [Testdata Attachment](#testdata-attachment)
           - [Testdata Attachment Approve](#testdata-attachment-approve)
@@ -1324,6 +1326,24 @@ use N1ebieski\KSEFClient\Requests\Tokens\Revoke\RevokeRequest;
 $response = $client->tokens()->revoke(
     new RevokeRequest(...)
 )->status();
+```
+</details>
+
+### Peppol
+
+<details>
+    <summary>
+        <h4>Peppol Query</h4>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Uslugi-Peppol/paths/~1peppol~1query/get
+
+```php
+use N1ebieski\KSEFClient\Requests\Peppol\Query\QueryRequest;
+
+$response = $client->peppol()->query(
+    new QueryRequest(...)
+)->object();
 ```
 </details>
 
