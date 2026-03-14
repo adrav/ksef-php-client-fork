@@ -10,9 +10,10 @@ use N1ebieski\KSEFClient\ValueObjects\NIP;
 use N1ebieski\KSEFClient\ValueObjects\NipVatUe;
 use N1ebieski\KSEFClient\ValueObjects\PeppolId;
 use N1ebieski\KSEFClient\ValueObjects\Pesel;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Permissions\Query\Persons\AuthorIdentifierType;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Permissions\TargetIdentifierType;
 
 interface IdentifierInterface
 {
-    public function getIdentifier(): NIP | NipVatUe | Pesel | Fingerprint | PeppolId | InternalId | TargetIdentifierType;
+    public function getIdentifier(): NIP | NipVatUe | Pesel | Fingerprint | PeppolId | InternalId | TargetIdentifierType | AuthorIdentifierType;
 }

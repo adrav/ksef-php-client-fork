@@ -99,10 +99,17 @@ Main features:
                 - [Permissions Query Authorizations Grants](#permissions-query-authorizations-grants)        
             - [Permissions Query Entities](#permissions-query-entities)
                 - [Permissions Query Entities Grants](#permissions-query-entities-grants)
+                - [Permissions Query Entities Roles](#permissions-query-entities-roles)
+            - [Permissions Query EuEntities](#permissions-query-euentities)
+                - [Permissions Query EuEntities Grants](#permissions-query-euentities-grants)
             - [Permissions Query Personal](#permissions-query-personal)
                 - [Permissions Query Personal Grants](#permissions-query-personal-grants)
+            - [Permissions Query Persons](#permissions-query-persons)
+                - [Permissions Query Persons Grants](#permissions-query-persons-grants)
             - [Permissions Query Subunits](#permissions-query-subunits)
-                - [Permissions Query Subunits Grants](#permissions-query-subunits-grants)                
+                - [Permissions Query Subunits Grants](#permissions-query-subunits-grants)
+            - [Permissions Query SubordinateEntities](#permissions-query-subordinateentities)
+                - [Permissions Query SubordinateEntities Roles](#permissions-query-subordinateentities-roles)
         - [Permissions Operations](#permissions-operations)
             - [Permissions Operations Status](#permissions-operations-status)
         - [Permissions Attachments](#permissions-attachments)
@@ -1086,6 +1093,40 @@ $response = $client->permissions()->query()->entities()->grants(
 ```
 </details>
 
+<details>
+    <summary>
+        <h5>Permissions Query Entities Roles</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1entities~1roles/get
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\Entities\Roles\RolesRequest;
+
+$response = $client->permissions()->query()->entities()->roles(
+    new RolesRequest(...)
+)->object();
+```
+</details>
+
+##### Permissions Query EuEntities
+
+<details>
+    <summary>
+        <h5>Permissions Query EuEntities Grants</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1eu-entities~1grants/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\EuEntities\Grants\GrantsRequest;
+
+$response = $client->permissions()->query()->euEntities()->grants(
+    new GrantsRequest(...)
+)->object();
+```
+</details>
+
 ##### Permissions Query Personal
 
 <details>
@@ -1099,6 +1140,24 @@ https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-upr
 use N1ebieski\KSEFClient\Requests\Permissions\Query\Personal\Grants\GrantsRequest;
 
 $response = $client->permissions()->query()->personal()->grants(
+    new GrantsRequest(...)
+)->object();
+```
+</details>
+
+##### Permissions Query Persons
+
+<details>
+    <summary>
+        <h5>Permissions Query Persons Grants</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1persons~1grants/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\Persons\Grants\GrantsRequest;
+
+$response = $client->permissions()->query()->persons()->grants(
     new GrantsRequest(...)
 )->object();
 ```
@@ -1118,6 +1177,24 @@ use N1ebieski\KSEFClient\Requests\Permissions\Query\Subunits\Grants\GrantsReques
 
 $response = $client->permissions()->query()->subunits()->grants(
     new GrantsRequest(...)
+)->object();
+```
+</details>
+
+##### Permissions Query SubordinateEntities
+
+<details>
+    <summary>
+        <h5>Permissions Query SubordinateEntities Roles</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Wyszukiwanie-nadanych-uprawnien/paths/~1permissions~1query~1subordinate-entities~1roles/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Permissions\Query\SubordinateEntities\Roles\RolesRequest;
+
+$response = $client->permissions()->query()->subordinateEntities()->roles(
+    new RolesRequest(...)
 )->object();
 ```
 </details>
