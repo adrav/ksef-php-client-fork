@@ -11,6 +11,7 @@ use N1ebieski\KSEFClient\Contracts\Resources\Permissions\Query\QueryResourceInte
 use N1ebieski\KSEFClient\Resources\AbstractResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Authorizations\AuthorizationsResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Entities\EntitiesResource;
+use N1ebieski\KSEFClient\Resources\Permissions\Query\EuEntities\EuEntitiesResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Personal\PersonalResource;
 use N1ebieski\KSEFClient\Resources\Permissions\Query\Subunits\SubunitsResource;
 use Throwable;
@@ -37,6 +38,15 @@ final class QueryResource extends AbstractResource implements QueryResourceInter
     {
         try {
             return new EntitiesResource($this->client, $this->exceptionHandler, $this->valinorCache);
+        } catch (Throwable $throwable) {
+            throw $this->exceptionHandler->handle($throwable);
+        }
+    }
+
+    public function euEntities(): EuEntitiesResource
+    {
+        try {
+            return new EuEntitiesResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
