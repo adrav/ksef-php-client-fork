@@ -7,6 +7,7 @@ namespace N1ebieski\KSEFClient\Contracts\Resources\Testdata;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Attachment\AttachmentResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Context\ContextResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Limits\LimitsResourceInterface;
+use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Permissions\PermissionsResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Person\PersonResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\RateLimits\RateLimitsResourceInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\Subject\SubjectResourceInterface;
@@ -24,4 +25,6 @@ interface TestdataResourceInterface
     public function attachment(): AttachmentResourceInterface;
 
     public function context(): ContextResourceInterface;
+
+    public function permissions(): PermissionsResourceInterface;
 }

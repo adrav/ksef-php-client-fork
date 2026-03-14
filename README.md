@@ -133,6 +133,9 @@ Main features:
         - [Testdata Context](#testdata-context)
             - [Testdata Context Block](#testdata-context-block)
             - [Testdata Context Unblock](#testdata-context-unblock)
+        - [Testdata Permissions](#testdata-permissions)
+            - [Testdata Permissions Grants](#testdata-permissions-grants)
+            - [Testdata Permissions Revoke](#testdata-permissions-revoke)
         - [Testdata Limits](#testdata-limits)
             - [Testdata Limits Context](#testdata-limits-context)
                 - [Testdata Limits Context Session](#testdata-limits-context-session)
@@ -1450,6 +1453,40 @@ use N1ebieski\KSEFClient\Requests\Testdata\Context\Unblock\UnblockRequest;
 
 $response = $client->testdata()->context()->unblock(
     new UnblockRequest(...)
+)->status();
+```
+</details>
+
+#### Testdata Permissions
+
+<details>
+    <summary>
+        <h5>Testdata Permissions Grants</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Dane-testowe/paths/~1testdata~1permissions/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Testdata\Permissions\Grants\GrantsRequest;
+
+$response = $client->testdata()->permissions()->grants(
+    new GrantsRequest(...)
+)->status();
+```
+</details>
+
+<details>
+    <summary>
+        <h5>Testdata Permissions Revoke</h5>
+    </summary>
+
+https://api-test.ksef.mf.gov.pl/docs/v2/index.html#tag/Dane-testowe/paths/~1testdata~1permissions~1revoke/post
+
+```php
+use N1ebieski\KSEFClient\Requests\Testdata\Permissions\Revoke\RevokeRequest;
+
+$response = $client->testdata()->permissions()->revoke(
+    new RevokeRequest(...)
 )->status();
 ```
 </details>

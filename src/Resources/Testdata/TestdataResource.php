@@ -12,6 +12,7 @@ use N1ebieski\KSEFClient\Resources\AbstractResource;
 use N1ebieski\KSEFClient\Resources\Testdata\Attachment\AttachmentResource;
 use N1ebieski\KSEFClient\Resources\Testdata\Context\ContextResource;
 use N1ebieski\KSEFClient\Resources\Testdata\Limits\LimitsResource;
+use N1ebieski\KSEFClient\Resources\Testdata\Permissions\PermissionsResource;
 use N1ebieski\KSEFClient\Resources\Testdata\Person\PersonResource;
 use N1ebieski\KSEFClient\Resources\Testdata\RateLimits\RateLimitsResource;
 use N1ebieski\KSEFClient\Resources\Testdata\Subject\SubjectResource;
@@ -75,6 +76,15 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     {
         try {
             return new ContextResource($this->client, $this->exceptionHandler, $this->valinorCache);
+        } catch (Throwable $throwable) {
+            throw $this->exceptionHandler->handle($throwable);
+        }
+    }
+
+    public function permissions(): PermissionsResource
+    {
+        try {
+            return new PermissionsResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
