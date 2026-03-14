@@ -2280,13 +2280,14 @@ vendor/bin/pest --parallel
 
 ## Roadmap
 
-1. Implementation of other endpoints
-2. Prepare the package for release candidate
+1. **23.03.2026** – Release of **v1.0.0-rc.\*** (from this point, avoid any breaking changes)
+2. **01.04.2026** – Release of **v1.0.0** (production ready)
 
 ## Special thanks
 
 Special thanks to:
 
-- all the helpful people on the [4programmers.net](https://4programmers.net/Forum/Nietuzinkowe_tematy/355933-krajowy_system_e_faktur) forum
+- all the [contributors](https://github.com/N1ebieski/ksef-php-client/graphs/contributors)
+- all the helpful people on the [4programmers.net](https://4programmers.net/Forum/Nietuzinkowe_tematy/355933-krajowy_system_e_faktur) forum and in the [issue reports](https://github.com/N1ebieski/ksef-php-client/issues)
 - authors of the repository [grafinet/xades-tools](https://github.com/grafinet/xades-tools) for the Xades document signing tool
 - Łukasz Wojtanowski - author of a modified version of the official ksef-pdf-generator, available at [lukasz-wojtanowski-softvig/ksef-pdf-generator](https://github.com/lukasz-wojtanowski-softvig/ksef-pdf-generator/tree/feature/cli), which adds support for generating invoice and UPO PDFs via CLI
